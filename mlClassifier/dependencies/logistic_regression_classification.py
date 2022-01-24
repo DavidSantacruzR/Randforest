@@ -19,26 +19,9 @@ class ModelBuilding:
         :return:
         """
 
-        if self.x_sample.shape[0] > self.y_sample.shape[0]:
-            needed_reshape = 'x_sample'
-        else:
-            needed_reshape = 'y_sample'
+        self.x_sample, self.y_sample = DataPreProcessing(self.x_sample, self.y_sample).resize_dataframe()
 
-        # When resizing is required. USe the custom built function.
-
-        if needed_reshape == 'x_sample':
-            arr = self.x_sample.values.copy()  # In case x_sample is larger than y.
-            set_rows = self.y_sample.shape[0]
-            set_columns = self.y_sample.shape[1]
-            arr.resize(set_rows, set_columns)
-            self.x_sample = pd.DataFrame(arr)
-
-        else:
-            arr = self.y_sample.values.copy()  # In case y_sample is larger than x.
-            set_rows = self.x_sample.shape[0]
-            set_columns = self.x_sample.shape[1]
-            arr.resize(set_rows, set_columns)
-            self.y_sample = pd.DataFrame(arr)
+        return print(self.x_sample.shape[0], self.y_sample.shape[0])
 
     def data_preparation(self):
         x_train, x_test, y_train, y_test = train_test_split(

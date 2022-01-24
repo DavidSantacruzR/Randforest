@@ -2,7 +2,7 @@ import pandas as pd
 
 
 class DataPreProcessing:
-    def __init__(self, train_sample_name: str, test_sample_name: str):
+    def __init__(self, train_sample_name, test_sample_name):
         self.train = train_sample_name
         self.test = test_sample_name
 
@@ -22,7 +22,18 @@ class DataPreProcessing:
         ## Iteratively add each resized feature to the new dataframe.
         :return:
         """
-        pass
+
+        if self.train.shape[0] > self.test.shape[0]:
+            rows_to_drop = int(self.train.shape[0] - self.test.shape[0])
+            self.train = self.train.iloc[rows_to_drop:, ]
+
+            return self.train, self.test
+
+        else:
+            rows_to_drop = int(self.train.shape[0] - self.test.shape[0])
+            self.test = self.test.iloc[rows_to_drop:, ]
+
+            return self.test, self.test
 
 
 class FeatureSelection:
