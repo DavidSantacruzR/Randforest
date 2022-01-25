@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from utils.data_preprocessing import DataPreProcessing
 
 
-class ModelBuilding:
+class ModelPreProcessing:
     def __init__(self, x_sample, y_sample):
         self.x_sample = pd.DataFrame(x_sample)
         self.y_sample = pd.DataFrame(y_sample)
@@ -32,10 +32,24 @@ class ModelBuilding:
 
         return [x_train, x_test, y_train, y_test]
 
-    def encode_target_label(self):
+
+class ModelScalingAndEncoding:
+    def __init__(self, x_training_sample, x_testing_sample, y_training_sample, y_testing_sample):
+        self.x_train = x_training_sample
+        self.x_test = x_testing_sample
+        self.y_train = y_training_sample
+        self.y_test = y_testing_sample
+
+    def feature_encoding(self):
+        """
+        ## Encoding true/false variables as [0,1] binaries.
+        ## The first variable in the dataset is excluded as it's supposed to be the file labels.
+        """
         pass
 
-
-class PredictionService:
-    def __init__(self):
+    def feature_scaling(self):
+        """
+        ## Uses the MinMaxScaler to scale variable values in the range [0, 1]
+        ## The first variable in the dataset is excluded as it's supposed to be the file labels.
+        """
         pass
