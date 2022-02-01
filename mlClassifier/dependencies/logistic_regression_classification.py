@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from utils.data_preprocessing import DataPreProcessing
+from utils.data_preprocessing import FeatureSelection
 
 
 class ModelBuilding:
@@ -27,20 +27,12 @@ class ModelBuilding:
         # When resizing is required. USe the custom built function.
 
         if needed_reshape == 'x_sample':
-            arr = self.x_sample.values.copy()  # In case x_sample is larger than y.
-            set_rows = self.y_sample.shape[0]
-            set_columns = self.y_sample.shape[1]
-            arr.resize(set_rows, set_columns)
-            self.x_sample = pd.DataFrame(arr)
-
-        else:
-            arr = self.y_sample.values.copy()  # In case y_sample is larger than x.
-            set_rows = self.x_sample.shape[0]
-            set_columns = self.x_sample.shape[1]
-            arr.resize(set_rows, set_columns)
-            self.y_sample = pd.DataFrame(arr)
+            self.x_sample = FeatureSelection(self.x_sample, self.y_sample).force_dataframe_resize()
+        elif needed_reshape == 'y_sample':
+            self.y_sample = FeatureSelection(self.y_sample, self.x_sample).force_dataframe_resize()
 
     def data_preparation(self):
+        print(self.x_sample.head(10))
         x_train, x_test, y_train, y_test = train_test_split(
             self.x_sample,
             self.y_sample,
@@ -48,9 +40,6 @@ class ModelBuilding:
             random_state=42)
 
         return [x_train, x_test, y_train, y_test]
-
-    def encode_target_label(self):
-        pass
 
 
 class PredictionService:

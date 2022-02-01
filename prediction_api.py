@@ -11,6 +11,8 @@ first_instance = data_preprocessing.DataPreProcessing('train_sample.csv', 'test_
 first_instance.import_data()
 [train_sample, test_sample] = first_instance.remove_null_values()
 
+# Here goes the encoding and normalising data.
+
 """
 ## each dataset should have the same features (same name references).
 """
