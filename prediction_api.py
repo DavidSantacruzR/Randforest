@@ -1,5 +1,5 @@
 from utils import data_preprocessing
-from mlClassifier.dependencies.logistic_regression_classification import ModelBuilding, PredictionService
+from mlClassifier.dependencies.logistic_model_preprocessing import ModelPreProcessing, ModelScalingAndEncoding
 import pandas as pd
 
 """
@@ -27,17 +27,14 @@ test_sample = pd.DataFrame(test_sample)
 ## once having the data then we need to get the model built.
 """
 
-third_instance = ModelBuilding(train_sample, test_sample)
+third_instance = ModelPreProcessing(train_sample, test_sample)
 third_instance.force_equal_split()
 x_train, x_test, y_train, y_test = third_instance.data_preparation()
 
-
-fourth_instance = PredictionService()  # Not yet ready.
-
-print('x_train:', x_train.shape,
-      '\n x_test:', x_test.shape,
-      '\n y_train:', y_train.shape,
-      '\n y_test:', y_test.shape)
+fourth_instance = ModelScalingAndEncoding(x_train, x_test, y_train, y_test)
+fourth_instance.feature_scaling()  # defines, selects and scales a variable if needed.
+fourth_instance.feature_encoding()  # defines, selects and encodes text variables in the sample.
+# Encode required text data, either binary or numerical.
 
 """
 ## Notes to self:
