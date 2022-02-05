@@ -13,10 +13,18 @@ features_to_use = ['Sha256', 'isPeFile', 'isValidSignedFile', 'fileSize', 'fileP
 data_cleaning = DataCleaning('train_sample.csv', 'test_sample.csv')
 data_cleaning.import_data()
 [train_sample, test_sample] = data_cleaning.remove_null_values()
+
+# Encoding and normalising.
+
+train_sample = data_cleaning.encode_normalise(train_sample)
+test_sample = data_cleaning.encode_normalise(test_sample)
+
+# Reshaping
+
 data_reshape = DataReshaping(train_sample, test_sample, features_to_use)
 data_reshape.select_features()
 target = data_reshape.get_target_variable()
-[train_sample, test_sample] = data_reshape.force_dataframe_resize(target)
+[train_sample, test_sample] = data_reshape.force_dataframe_resize()
 predictions = PredictionService()
 
 """

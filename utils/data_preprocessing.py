@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder, StandardScaler
+from numpy import array
 
 
 class DataCleaning:
@@ -11,8 +12,6 @@ class DataCleaning:
     def __init__(self, train_sample_name: str, test_sample_name: str):
         self.train = train_sample_name
         self.test = test_sample_name
-        self.train_label = train_sample_name
-        self.test_label = test_sample_name
 
     """
     ## currently importing data from csv and dropping NA values in both datasets.
@@ -34,8 +33,29 @@ class DataCleaning:
     Not recommended with heavy outliers in the dataset.
     """
 
-    def encode_normalise(self, training_sample, testing_sample):
-        pass
+    def encode_normalise(self, sample):
+        labels = list(sample.columns)
+        to_encode = {}
+
+        for element in labels:
+            data_type = str(sample[element].dtype)
+            to_encode[element] = data_type
+
+            if to_encode[element] == 'int64':
+                scaler = StandardScaler()
+                reshape_data = array(sample[element]).reshape(-1, 1)
+                sample[element] = scaler.fit_transform(reshape_data)
+
+            elif to_encode[element] == 'float64':
+                scaler = StandardScaler()
+                reshape_data = array(sample[element]).reshape(-1, 1)
+                sample[element] = scaler.fit_transform(reshape_data)
+
+            else:
+                label_encoder = LabelEncoder()
+                sample[element] = label_encoder.fit_transform(sample[element])
+
+        return sample
 
 
 class DataReshaping:
@@ -61,7 +81,7 @@ class DataReshaping:
     def select_features(self):
         return [self.x1[self.variables_vector], self.x2[self.variables_vector]]
 
-    def force_dataframe_resize(self, target):
+    def force_dataframe_resize(self):
 
         if self.x1.shape[0] < self.x2.shape[0]:
             max_rows: int = self.x1.shape[0]
