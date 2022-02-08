@@ -26,3 +26,6 @@ class TestPostRequestFormat(unittest.TestCase):
     def test_file_size(self):
         self.assertTrue(request.get_file_size() <= 10)  # megabytes.
 
+
+if __name__ == '__main__':
+    unittest.main()
