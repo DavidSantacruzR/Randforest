@@ -2,6 +2,38 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from numpy import array
 
+"""
+## Encoding text variables using a simple labeler encoder.
+## Normalising variables using standard scaler z = x-mean/ste.dev.
+Not recommended with heavy outliers in the dataset.
+"""
+
+
+def encode_normalise(sample):
+
+    labels = list(sample.columns)
+    to_encode = {}
+
+    for element in labels:
+        data_type = str(sample[element].dtype)
+        to_encode[element] = data_type
+
+        if to_encode[element] == 'int64':
+            scaler = StandardScaler()
+            reshape_data = array(sample[element]).reshape(-1, 1)
+            sample[element] = scaler.fit_transform(reshape_data)
+
+        elif to_encode[element] == 'float64':
+            scaler = StandardScaler()
+            reshape_data = array(sample[element]).reshape(-1, 1)
+            sample[element] = scaler.fit_transform(reshape_data)
+
+        else:
+            label_encoder = LabelEncoder()
+            sample[element] = label_encoder.fit_transform(sample[element])
+
+    return sample
+
 
 class DataCleaning:
 
@@ -26,36 +58,6 @@ class DataCleaning:
         self.test = pd.DataFrame(self.test).dropna()
 
         return [self.train, self.test]
-
-    """
-    ## Encoding text variables using a simple labeler encoder.
-    ## Normalising variables using standard scaler z = x-mean/ste.dev.
-    Not recommended with heavy outliers in the dataset.
-    """
-
-    def encode_normalise(self, sample):
-        labels = list(sample.columns)
-        to_encode = {}
-
-        for element in labels:
-            data_type = str(sample[element].dtype)
-            to_encode[element] = data_type
-
-            if to_encode[element] == 'int64':
-                scaler = StandardScaler()
-                reshape_data = array(sample[element]).reshape(-1, 1)
-                sample[element] = scaler.fit_transform(reshape_data)
-
-            elif to_encode[element] == 'float64':
-                scaler = StandardScaler()
-                reshape_data = array(sample[element]).reshape(-1, 1)
-                sample[element] = scaler.fit_transform(reshape_data)
-
-            else:
-                label_encoder = LabelEncoder()
-                sample[element] = label_encoder.fit_transform(sample[element])
-
-        return sample
 
 
 class DataReshaping:

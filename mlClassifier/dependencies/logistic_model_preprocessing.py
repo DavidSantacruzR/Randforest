@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
-class ModelBuilding:
+class DataPreparation:
     def __init__(self, x_sample, y_sample):
         self.x_sample = pd.DataFrame(x_sample)
         self.y_sample = pd.DataFrame(y_sample)
@@ -16,7 +16,3 @@ class ModelBuilding:
 
         return [x_train, x_test, y_train, y_test]
 
-
-class PredictionService:
-    def __init__(self):
-        pass
