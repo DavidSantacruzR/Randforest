@@ -1,0 +1,5 @@
+# Project file
+.idea
+
+# Environment variables
+.env
