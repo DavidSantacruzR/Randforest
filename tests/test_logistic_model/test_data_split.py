@@ -1,6 +1,6 @@
 import unittest
 import random
-from mlClassifier.dependencies.logistic_model_preprocessing import ModelBuilding
+from callbacks.dependencies.logistic_model_preprocessing import ModelBuilding
 from pandas import DataFrame
 
 
