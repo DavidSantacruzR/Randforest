@@ -1,5 +1,5 @@
 import unittest
-from callbacks.middleware.features_request import PostRequest
+from callbacks.requests.features_request import PostRequest
 
 request = PostRequest()   # class containing all the useful dataframes and arrays, prior to data preprocessing.
 features = request.get_features_labels()  # Array containing all the features from the .csv input file.
