@@ -1,5 +1,6 @@
 # Project file
 .idea
+.DS_Store
 
 # Environment variables
 .env
