@@ -1,18 +1,17 @@
 from hercule.data_fetching import SQL
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from hercule.connection_engine import Session
 
-def create_session(connection_string: str) -> object:
-    session = sessionmaker(bind=create_engine(connection_string, pool_size=5), 
-    expire_on_commit= False) 
-    
-    return session()
+session = Session(
+        driver='postgresql',
+        user='api',
+        password='girl11877',
+        host='localhost',
+        port='5432',
+        database='malware'
+    )
 
 
 def test_fetching_sql_data():
-    test_session = create_session('postgresql://api:girl11877@localhost:5432/malware')
-    data = SQL(test_session, 0.20, 'malware_data')()
+    data = SQL(session(), 0.20, 'malware_data')
 
-    result = {'sample_size': len(data), 'number_of_features': len(data[0])}
-
-    assert result == {'sample_size': 480, 'number_of_features': 8}
+    assert data() == {'sample_size': 480, 'number_of_features': 8}
