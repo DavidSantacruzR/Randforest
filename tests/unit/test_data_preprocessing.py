@@ -22,5 +22,4 @@ def test_encode_boolean_variables():
 def test_normalise_numerical_variables():
     response = FormattedData(np.array([numerical_data]).T, 'numerical')
     expected_result = standard_normaliser(numerical_data)
-    print(expected_result)
     assert response() == expected_result
