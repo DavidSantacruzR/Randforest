@@ -4,3 +4,4 @@ numpy==1.21.6
 SQLAlchemy==1.4.37
 pytest==7.1.2
 psycopg2-binary==2.9.3
+pytest-mock==3.8.1

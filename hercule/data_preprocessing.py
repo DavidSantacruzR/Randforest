@@ -1,11 +1,12 @@
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 from pandas import DataFrame
 
-class ConverToDataframe:
 
-    def __init__(self, data):
+class ConvertToDataframe:
+
+    def __init__(self, data: dict):
         self.dataframe = data
-    
+
     def convert_to_dataframe(self):
         return DataFrame(self.dataframe)
 
@@ -14,22 +15,19 @@ class ConverToDataframe:
 
 
 class FormattedData:
-    
-    def __init__(self, feature):
-        self.feature = feature
 
-    def encode_boolean_variables(self):
-        return OneHotEncoder
+    def __init__(self, feature: any, data_type: str):
+        self.feature = feature
+        self.data_type = data_type
+        self.encoder = self.get_encoder()
+
+    def get_encoder(self):
+        encoders = {
+            'bool': LabelEncoder(),
+            'numerical': StandardScaler()
+        }
+        return encoders[self.data_type]
 
     def __call__(self):
-        pass
-
-from connection_engine import Session
-from data_fetching import SQL
-
-instance = Session('postgresql://api:girl11877@localhost:5432/malware')
-sql = SQL(instance, 0.20, 'malware_data')
-data = sql()
-
-data_instance = ConverToDataframe(data)
-print(data_instance())
+        result = self.encoder.fit_transform(self.feature)
+        return result.T.tolist()
