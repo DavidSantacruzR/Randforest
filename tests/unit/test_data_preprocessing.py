@@ -61,7 +61,6 @@ def test_data_consistency_categorical_encoder_fail():
 
 def test_categorical_encoder():
     instance = CategoricalEncoder(mock_data, ['variable_x'])
-    print(instance._to_encode)
     data = {'variable_x': ['person_1', 'person_2', 'person_3', 'person_4']}
     x = instance.build_categorization_dictionary(data['variable_x'])
     assert instance.fit_transform() == {'variable_x': [0, 1, 2, 3]}
