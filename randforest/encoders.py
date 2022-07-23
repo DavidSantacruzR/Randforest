@@ -6,7 +6,7 @@ class Formatter(abc.ABC):
     def __init__(self, dataset: dict, selected_features: list) -> None:
         self.dataset = dataset
         self.selected = selected_features
-        self.encoded = self.extract_features()
+        self.sample = self.extract_features()
         if not isinstance(dataset, dict):
             raise TypeError('Dataset must be a dictionary.')
         self.check_variable_data_type()
@@ -20,8 +20,8 @@ class Formatter(abc.ABC):
         return {feature: self.dataset[feature] for feature in self.selected}
 
     def check_variable_data_type(self):
-        for feature in self.encoded:
-            if not isinstance(self.encoded[feature], list):
+        for feature in self.sample:
+            if not isinstance(self.sample[feature], list):
                 raise TypeError(f'Variable: {feature} must be a list.')
 
     @abc.abstractmethod
@@ -40,14 +40,14 @@ class LabelEncoder(Formatter):
     """
 
     def check_data_consistency(self):
-        for feature in self.encoded:
-            if len(set(self.encoded[feature])) != 2:
+        for feature in self.sample:
+            if len(set(self.sample[feature])) != 2:
                 raise TypeError(f'Variable: {feature} contains non boolean data type.')
 
     def fit_transform(self) -> dict:
-        for feature in self.encoded:
-            self.encoded[feature] = [0 if value is True else 1 for value in self.encoded[feature]]
-        return self.encoded
+        for feature in self.sample:
+            self.sample[feature] = [0 if value is True else 1 for value in self.sample[feature]]
+        return self.sample
 
 
 class CategoricalEncoder(Formatter):
@@ -56,8 +56,8 @@ class CategoricalEncoder(Formatter):
     """
 
     def check_data_consistency(self):
-        for feature in self.encoded:
-            if None in self.encoded[feature]:
+        for feature in self.sample:
+            if None in self.sample[feature]:
                 raise TypeError(f'None type cannot be categorized, resolve it in Variable: {feature}.')
 
     @staticmethod
@@ -66,7 +66,7 @@ class CategoricalEncoder(Formatter):
         return {item: enumeration for enumeration, item in enumerate(unique_values)}
 
     def fit_transform(self):
-        for feature in self.encoded:
-            categorization = self.build_categorization_dictionary(self.encoded[feature])
-            self.encoded[feature] = [categorization[value] for value in self.encoded[feature]]
-        return self.encoded
+        for feature in self.sample:
+            categorization = self.build_categorization_dictionary(self.sample[feature])
+            self.sample[feature] = [categorization[value] for value in self.sample[feature]]
+        return self.sample

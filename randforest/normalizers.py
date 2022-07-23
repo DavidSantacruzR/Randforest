@@ -1,13 +1,13 @@
 import math
-from hercule.encoders import Formatter
+from randforest.encoders import Formatter
 
 
 class StandardNormalizer(Formatter):
 
     def check_data_consistency(self):
-        for feature in self.encoded:
+        for feature in self.sample:
             try:
-                sum(self.encoded[feature])
+                sum(self.sample[feature])
             except Exception as e:
                 raise TypeError(f'Variable: {feature} contains non boolean data type.') from e
 
@@ -25,7 +25,7 @@ class StandardNormalizer(Formatter):
         return [round((data_point - mean) / math.sqrt(variance), 9) for data_point in feature]
 
     def fit_transform(self) -> dict:
-        for feature in self.encoded:
-            mean, variance = self.calculate_descriptive_statistics(self.encoded[feature])
-            self.encoded[feature] = self.standardize_feature(self.encoded[feature], mean, variance)
-        return self.encoded
+        for feature in self.sample:
+            mean, variance = self.calculate_descriptive_statistics(self.sample[feature])
+            self.sample[feature] = self.standardize_feature(self.sample[feature], mean, variance)
+        return self.sample
