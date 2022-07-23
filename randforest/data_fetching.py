@@ -1,6 +1,6 @@
 class Database:
 
-    def __init__(self, session, sample_size: float, table:str):
+    def __init__(self, session, sample_size: float, table: str):
         self.session = session()
         self.size = sample_size
         self.table = table
@@ -41,14 +41,9 @@ class SQL(Database):
         ).fetchone()[0]
 
     def query_data(self):
-        print(self.table)
         return self.session.execute(
             f'''
                 SELECT * FROM {self.table}
                 limit({self.total_sample * self.size})
             '''
             ).fetchall()
-
-
-class MongoDB(Database):
-    pass
