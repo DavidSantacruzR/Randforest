@@ -1,4 +1,4 @@
-from hercule.connection_engine import Session
+from randforest.connection_engine import Session
 
 
 def test_db_connection_successful():

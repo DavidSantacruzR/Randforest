@@ -1,5 +1,5 @@
-from hercule.data_fetching import SQL
-from hercule.connection_engine import Session
+from randforest.data_fetching import SQL
+from randforest.connection_engine import Session
 
 session = Session(
         driver='postgresql',

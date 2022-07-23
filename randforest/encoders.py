@@ -1,4 +1,7 @@
-class Encoders:
+import abc
+
+
+class Formatter(abc.ABC):
 
     def __init__(self, dataset: dict, selected_features: list) -> None:
         self.dataset = dataset
@@ -21,11 +24,16 @@ class Encoders:
             if not isinstance(self.encoded[feature], list):
                 raise TypeError(f'Variable: {feature} must be a list.')
 
+    @abc.abstractmethod
     def check_data_consistency(self):
         pass
 
+    @abc.abstractmethod
+    def fit_transform(self):
+        pass
 
-class LabelEncoder(Encoders):
+
+class LabelEncoder(Formatter):
     """
     Basic label encoder replacing every item in each feature for either 0 or 1 depending on variable is
     True or False.
@@ -34,7 +42,7 @@ class LabelEncoder(Encoders):
     def check_data_consistency(self):
         for feature in self.encoded:
             if len(set(self.encoded[feature])) != 2:
-                raise ValueError(f'Variable: {feature} contains non boolean data type.')
+                raise TypeError(f'Variable: {feature} contains non boolean data type.')
 
     def fit_transform(self) -> dict:
         for feature in self.encoded:
@@ -42,7 +50,7 @@ class LabelEncoder(Encoders):
         return self.encoded
 
 
-class CategoricalEncoder(Encoders):
+class CategoricalEncoder(Formatter):
     """
     Categorical encoder that replaces every unique element in feature for it's numerical representation.
     """
@@ -50,7 +58,7 @@ class CategoricalEncoder(Encoders):
     def check_data_consistency(self):
         for feature in self.encoded:
             if None in self.encoded[feature]:
-                raise ValueError(f'None type cannot be categorized, resolve it in Variable: {feature}.')
+                raise TypeError(f'None type cannot be categorized, resolve it in Variable: {feature}.')
 
     @staticmethod
     def build_categorization_dictionary(feature):
