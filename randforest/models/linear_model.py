@@ -52,7 +52,7 @@ class LinearRegression:
         result_vector = self._compute_matrix_multiplication(self._regressors, self._target_transpose)
         return self._compute_matrix_multiplication(inverse, result_vector)
 
-    def _transform_estimators_vector(self):
+    def transform_estimators_vector(self):
         estimators = list(self._estimators_vector())
         return [estimator[0] for estimator in estimators]
 
