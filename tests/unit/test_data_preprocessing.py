@@ -56,22 +56,25 @@ def test_standard_normalizer():
 
 
 def test_mice_data_imputation():
-    real_data = {
+    """
+    Credit worthiness is the target variable for the test.
+    """
+    imputation_mock_data = {
         'age': [35, 20, 56, 47, 38],
         'wages': [100, 200, 150, 320, 80],
         'dependents': [1, 2, 0, 1, 1],
-        'house_price': [2000, 2500, 3200, 1800, 1950],
-        'interest_rate': [0.01, 0.012, 0.02, 0.019, 0.3]
+        'experience': [8, 8, 5, 3, 9],
+        'credit_worthy': [0.01, 0.012, 0.02, 0.019, 0.3]
     }
 
     to_impute_data = {
         'age': [35, 20, 56, None, 38],
         'wages': [100, 200, None, 320, 80],
         'dependents': [None, 2, 0, 1, 1],
-        'house_price': [2000, 2500, 3200, None, 1950],
-        'interest_rate': [0.01, 0.012, 0.02, 0.019, None]
+        'experience': [8, 8, 5, None, 9],
+        'credit_worthy': [0.01, 0.012, 0.02, 0.019, None]
     }
 
-    # TODO: Use instance of the class to make the test pass.
-    instance = ImputerFactory(to_impute_data, method='mice').fetch_imputation_method()
-    assert instance.calculate_result_matrix() == real_data
+    instance = ImputerFactory(to_impute_data, method='mice', target='credit_worthy').fetch_imputation_method()
+    print(instance._create_missing_values_index_matrix())
+    assert instance.calculate_result_matrix() == imputation_mock_data
