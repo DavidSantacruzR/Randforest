@@ -7,7 +7,12 @@ class LinearRegression:
 
     _slots_ = [
         '_regressors_transpose',
-        '_data'
+        '_target_transpose',
+        '_features',
+        '_regressors',
+        '_target',
+        '_predict',
+        '_completed_target'
     ]
 
     _regressors_transpose = None
