@@ -1,14 +1,17 @@
+from randforest.models import LinearRegression
 
 
 class MiceImputer:
     """
     The most important assumption in the mice algorithm
     is that data is missing completely at random.
+
+    Imputation order: Roman: From left to right.
     """
     _base_matrix = {}
     _index_matrix = {}
     _comparison_matrix = {}
-    _regressed_feature = {}
+    _regressed = {}
     _regressors = {}
     _regression_parameters = {}
 
@@ -21,8 +24,7 @@ class MiceImputer:
     def _get_feature_average(feature) -> float:
         cumulative_sum = sum(point if point is not None else 0 for point in feature)
         n_values = sum(point is not None for point in feature)
-        null_values = len(feature) - n_values
-        return cumulative_sum / (n_values - null_values)
+        return cumulative_sum / n_values
 
     @staticmethod
     def _fill_missing_values(feature, average: float) -> list:
@@ -37,9 +39,6 @@ class MiceImputer:
                 0 if value is None else 1 for value in self._data[feature]
             ]
 
-    def _update_missing_values_index_matrix(self):
-        pass
-
     def _get_base_matrix(self):
         for feature in self._data:
             if feature != self._target:
@@ -51,11 +50,10 @@ class MiceImputer:
         self._get_base_matrix()
         return self._base_matrix
 
-    def _update_regression_parameters(self, target, regressors):
-        pass
-
-    def _insert_estimated_value(self):
-        pass
+    def _compute_regression_parameters(self):
+        self._get_base_matrix()
+        model_instance = LinearRegression(self._regressors, self._regressed, self._base_matrix)
+        self._regressors = model_instance.transform_estimators_vector()
 
     @staticmethod
     def calculate_result_matrix():

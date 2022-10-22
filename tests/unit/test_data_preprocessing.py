@@ -76,4 +76,6 @@ def test_mice_data_imputation():
     }
 
     instance = ImputationFactory(to_impute_data, method='mice', target='credit_worthy').fetch_imputation_method()
+    print(instance._create_missing_values_index_matrix(), instance._index_matrix)
+    print(instance._get_base_matrix(), instance._base_matrix)
     assert instance.calculate_result_matrix() == imputation_mock_data
