@@ -1,7 +1,7 @@
 from randforest.imputers import KnnImputer, MiceImputer, AverageImputer
 
 
-class ImputerFactory:
+class ImputationFactory:
     __slots__ = [
         '_method',
         '_data',

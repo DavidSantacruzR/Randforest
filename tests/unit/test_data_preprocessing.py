@@ -2,7 +2,7 @@ import pytest
 
 from randforest.encoders import LabelEncoder, CategoricalEncoder
 from randforest.normalizers import StandardNormalizer
-from randforest.factories.imputers import ImputerFactory
+from randforest.factories.imputers import ImputationFactory
 
 mock_data = {
     'variable_x': ['person_1', 'person_2', 'person_3', 'person_4'],
@@ -75,6 +75,5 @@ def test_mice_data_imputation():
         'credit_worthy': [0.01, 0.012, 0.02, 0.019, None]
     }
 
-    instance = ImputerFactory(to_impute_data, method='mice', target='credit_worthy').fetch_imputation_method()
-    print(instance._create_missing_values_index_matrix())
+    instance = ImputationFactory(to_impute_data, method='mice', target='credit_worthy').fetch_imputation_method()
     assert instance.calculate_result_matrix() == imputation_mock_data

@@ -20,8 +20,8 @@ def test_linear_regression_estimator():
 
     instance = LinearRegression(regressors, target, to_predict)
     assert instance.transform_estimators_vector() == [
-        0.09366783409371948,
-        0.00403455168376235,
-        -0.17170184536614608,
-        -1.691664155139609
+        0.09366783409371959,
+        0.004034551683762366,
+        -0.1717018453661464,
+        -1.6916641551396125
     ]
