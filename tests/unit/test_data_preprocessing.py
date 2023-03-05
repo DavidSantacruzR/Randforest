@@ -51,5 +51,4 @@ def test_data_consistency_standard_normalizer():
 def test_standard_normalizer():
     data = {'variable_1': [-2, -1, 0, 1, 2]}
     instance = StandardNormalizer(data, ['variable_1'])
-    print(instance.fit_transform())
     assert instance.fit_transform() == {'variable_1': [-1.414213562, -0.707106781, 0, 0.707106781, 1.414213562]}
