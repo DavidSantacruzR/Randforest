@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "Randforest"
+version = "0.1.0"
+description = "Library to perform random forest classifiers, hassle free."
+authors = ["David Santacruz R. <axelsantacruzr@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pytest = "7.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

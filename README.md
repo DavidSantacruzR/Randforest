@@ -1,6 +1,7 @@
 ## RandForest
 ### Statistical classifier using techniques based on random forests and decision trees
 ***
+
 The **RandForest** library is a personal project aimed to provide a framework classify data between two or more classes
 based on decision trees and different kernel algorithms. Use it just for fun or learning.
 
@@ -40,9 +41,10 @@ to_predict = {
 
 linear_model = LinearRegression(regressors, target, to_predict)
 model_estimators = linear_model.transform_estimators_vector()
-"""
-The transform method, returns the estimator as a list: 
-[ 0.09366783409371948, 0.00403455168376235, -0.17170184536614608, -1.691664155139609]
-"""
+
 ```
 
+The transform method, returns the estimator as a list: 
+```python
+[ 0.09366783409371948, 0.00403455168376235, -0.17170184536614608, -1.691664155139609]
+```
